@@ -1,0 +1,63 @@
+services:
+  shuttle-conf:
+    image: streamshuttle/conf
+    volumes:
+      - streamshuttle_data:/data
+      - ./app_image/StreamShuttle-0.0.7.AppImage:/app/app_image/StreamShuttle.AppImage
+    restart: no
+    #
+    # license can be defined inline below or added to the .env file in the conf directory
+    #
+    #environment:
+    #  license:
+    #    gw7s+6z3l4d8emcbpcdw6mh8wfsxwn7uod7jqb+41xk+yybdv+auvxbm0qbt8q2w8lsaml3e+hpt
+    #    gr/2vk1hdafnqevbso4ip0tde0jbvlfo6shqrg9zpcvbsr8lfex6xea274tubtjex/wca9nqja/2
+    #    ...
+    env_file:
+      - conf/.env
+  shuttle-api:
+    image: streamshuttle/api
+    volumes:
+      - streamshuttle_data:/data
+      - ./api/config/docker.json:/app/config/docker.json
+    restart: unless-stopped
+    ports:
+      - "3030:3030"
+    depends_on:
+      - shuttle-conf
+    environment:
+      PUSH_NOTIFICATION_KEY:
+      # additional domains ex. CORS_DOMAINS: localhost:8080,someotherhost:9999
+      # - docker host machine IP:PORT should be included here too if you intend to access over the network
+      CORS_DOMAINS: localhost:8080
+      # optionally initialize the admin user with the following password
+      #USER_P: someSecretPass!
+      # optionally initialize the first hub with the following password
+      #HUB_P: someSecretPass!
+  shuttle-ui:
+    image: streamshuttle/ui
+    volumes:
+      - streamshuttle_data:/data
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+  shuttle-hub:
+    image: streamshuttle/hub
+    volumes:
+      - streamshuttle_data:/data
+      - ./hub/config/hub-1.json:/app/config/hub-1.json
+    restart: unless-stopped
+    environment:
+      NODE_ENV: hub-1
+      # api url, used to wait for API to become ready before starting the hub
+      #  - set to an empty string completely skip this check
+      #API_WAIT_URL: ""
+      # optionally initialize the hub configuration with the following password
+      #HUB_P: someSecretPass!
+    #ports:
+      #- "6000:6000" # only required if api / other hubs are outside of local network
+      #- "2121:2121" # storage area - ftp port
+      #- "2222:2222" # storage area - sftp port
+
+volumes:
+  streamshuttle_data:

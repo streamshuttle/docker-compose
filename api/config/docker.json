@@ -1,0 +1,48 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "useHttps": true,
+  "listenAddress": "0.0.0.0",
+  "public": "./public/",
+  "paginate": {
+    "default": 10,
+    "max": 100
+  },
+  "origins": [
+    "http://localhost:3030"
+  ],
+  "corsWhitelist": [
+    "localhost:8080"
+  ],
+  "authentication": {
+    "entity": "user",
+    "service": "users",
+    "secret": "LAGW7YFTKuTFna0CxYo8mL/I/fgM=",
+    "authStrategies": [
+      "jwt",
+      "local",
+      "local_hub"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "algorithm": "HS256",
+      "expiresIn": "7d"
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    },
+    "local_hub": {
+      "entity": "hub",
+      "service": "hubs",
+      "usernameField": "ident",
+      "passwordField": "password"
+    }
+  },
+  "sqlite": "sqlite:/data/stream_shuttle_api.sqlite",
+  "streamSocketListenAddress": "0.0.0.0",
+  "streamSocketListenPort": 5000
+}

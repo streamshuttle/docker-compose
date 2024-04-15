@@ -1,0 +1,21 @@
+services:
+  shuttle-hub:
+    image: streamshuttle/hub-cuda
+    volumes:
+      - streamshuttle_data:/data
+      - ./hub/config/hub-1.json:/app/config/hub-1.json
+    restart: unless-stopped
+    environment:
+      NODE_ENV: hub-1
+      # optionally initialize the hub configuration with the following password
+      #HUB_P: someSecretPass!
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+            #- driver: nvidia
+              #device_ids: ['0', '3']
+              #capabilities: [gpu]

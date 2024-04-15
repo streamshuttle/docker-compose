@@ -1,0 +1,29 @@
+{
+  "hubId": 1,
+  "hubController": {
+    "proto": "https",
+    "host": "shuttle-api",
+    "port": "3030"
+  },
+  "hubCreds": {
+    "user": "hub-1",
+    "pass": "hub123"
+  },
+  "mediaProxy": {
+    "listenPort": 6000
+  },
+  "appConfig": {
+    "defaultStorageRoot": "/data/shuttle_storage",
+    "defaultTempStorageRoot": "/tmp/shuttle_data/shuttle_storage/temp",
+    "defaultFfmpegTempStorageRoot": "/tmp/shuttle_data/shuttle_storage/ffmpeg-temp",
+    "tempDbUseMem": true,
+    "useTempMemFs": true,
+    "useFfmpegMemFs": true,
+    "snapshotTempDb": false,
+    "snapshotTempDbInterval": 15000,
+    "enableGlobalTensorDetector": false
+  },
+  "hubTypes": [
+    "common", "stream", "worker", "file", "event", "storageArea", "monitor"
+  ]
+}
