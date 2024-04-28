@@ -49,10 +49,10 @@ ex. under the "volumes" key add a new entry
       - streamshuttle_data:/data
       - /mnt/disk1/hub-1-data:/mnt/hub-1-data
 ```
-- open the configuration file that is in this repository. This is the "*template*" StreamShuttle will utilize to generate the final configuration.
+- open the configuration file that is in this repository.
  - `/hub/config/hub-1.json`
  - and replace the `defaultStorageRoot` option with the new path.
- - if following the example we simply change  `/data/shuttle_storage` to `/mnt/hub-1-data`
+ - if following the example, we simply change  `/data/shuttle_storage` to `/mnt/hub-1-data`
 
 
 ## Changing a specific hubs storage directory (*After having previously started StreamShuttle*)
@@ -68,16 +68,13 @@ ex. under the "volumes" key add a new entry
       - /mnt/disk1/hub-1-data:/mnt/hub-1-data
 ```
 
-Login to the shuttle-conf container
-`docker compose run --rm shuttle-conf bash`
-
 Now modify the hub configuration file so that the storage directory
 points to the desired path.
 
-- open the configuration file for editing (nano and vim are installed)
- - `nano /data/config/hub/hub-1.json`
+- open the configuration file that is in this repository.
+ - `nano /hub/config/hub-1.json`
  - and replace the `defaultStorageRoot` option with the new path.
- - if following the example we simply change  `/data/shuttle_storage` to `/mnt/hub-1-data`
+ - if following the example, we simply change  `/data/shuttle_storage` to `/mnt/hub-1-data`
 
 If hub data already existed make sure it is copied into the correct location
  - run the shuttle-conf container with the new volume mount
