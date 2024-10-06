@@ -3,7 +3,7 @@ services:
     image: streamshuttle/conf
     volumes:
       - streamshuttle_data:/data
-      - ./app_image/StreamShuttle-0.0.7.AppImage:/app/app_image/StreamShuttle.AppImage
+      - ./app_image/StreamShuttle-0.0.10.AppImage:/app/app_image/StreamShuttle.AppImage
     restart: no
     #
     # license can be defined inline below or added to the .env file in the conf directory
@@ -26,6 +26,9 @@ services:
     depends_on:
       - shuttle-conf
     environment:
+      UI_HOST: shuttle-ui
+      UI_PORT: 8080
+      UI_BASE_PATH: '/ui'
       PUSH_NOTIFICATION_KEY:
       # additional domains ex. CORS_DOMAINS: localhost:8080,someotherhost:9999
       # - docker host machine IP:PORT should be included here too if you intend to access over the network
@@ -39,6 +42,9 @@ services:
     volumes:
       - streamshuttle_data:/data
     restart: unless-stopped
+    environment:
+      UI_PORT: 8080
+      UI_BASE_PATH: '/ui'
     ports:
       - "8080:8080"
   shuttle-hub:
